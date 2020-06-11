@@ -1,0 +1,207 @@
+﻿<Page x:Class="Funmoji.Pages.PageEmoji"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Funmoji.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="PageEmoji"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"        
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{StaticResource FontYahei}"
+      
+      xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+      
+      xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+      >
+
+    <Grid x:Name="GridPageEmoji">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone x:Name="ColorZoneTop"
+                                  Grid.ColumnSpan="{Binding ElementName=GridPageEmoji,Path=ColumnDefinitions.Count}"
+                                  Mode="PrimaryMid"
+                                  Padding="10">
+            <Grid>
+                <materialDesign:ColorZone Mode="Standard"
+                                          CornerRadius="2"
+                                          Panel.ZIndex="1"
+                                          HorizontalAlignment="Left"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                          Width="200"
+                                          x:Name="ColorZoneChoose">
+                    <ComboBox materialDesign:HintAssist.Hint="分类"
+                              Margin="10 4"
+                              x:Name="ComboBoxChoose"
+                              SelectedIndex="0">
+                        <ComboBoxItem >
+                            选择分类
+                        </ComboBoxItem>
+                    </ComboBox>
+                </materialDesign:ColorZone>
+                <DockPanel HorizontalAlignment="Right">
+                <StackPanel
+                    Orientation="Horizontal"
+                    materialDesign:RippleAssist.IsCentered="True">
+                    <materialDesign:ColorZone
+                        Mode="Standard"
+                        CornerRadius="2"
+                        Panel.ZIndex="1"
+                        Margin="0 0 0 0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Height="{Binding ElementName=ColorZoneChoose,Path=ActualHeight}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignToolButton}"
+                                    Grid.Column="1"
+                                    x:Name="ButtonSearch"
+                                    Click="ButtonSearch_Click">
+                                <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                            </Button>
+                            <TextBox x:Name="TextBoxSearch"
+                                Margin="8 0 0 0"
+                                materialDesign:HintAssist.Hint="在此搜索中文关键字"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                BorderThickness="0"
+                                Width="300"
+                                VerticalAlignment="Center"
+                                KeyDown="TextBox_KeyDown"/>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </StackPanel>
+            </DockPanel>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <ListView Name="ListViewEmoji" Width="Auto" Height="Auto" Margin="5"
+              ScrollViewer.VerticalScrollBarVisibility="Visible"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Grid.Row="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--来自Nuget包VirtualizingWrapPanel-->
+                    <!--和emoji的兼容性不是很好，暂时不用-->
+                    <!--<wpftk:VirtualizingWrapPanel Orientation="Vertical"/> -->
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Margin="4">
+                        <emoji:TextBlock FontSize="24" Text="{Binding Text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.Column="1">
+            <Border x:Name="BorderRight"
+                Background="{DynamicResource MaterialDesignDivider}"
+                Width="2"
+                VerticalAlignment="Stretch"
+                SnapsToDevicePixels="True" />
+        
+        <Expander ExpandDirection="Left"
+                  x:Name="ExpanderRight"
+                  IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="详&#x000A;情"
+                           RenderTransformOrigin=".5,.5">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="0" />
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Expander.Header>
+                <materialDesign:Card  Width="250" Height="{Binding ElementName=BorderRight,Path=ActualHeight}"
+                                      Name="CardInfo">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="200" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <emoji:TextBlock x:Name="TextBlockBigEmoji"
+                                         Text="{Binding Text}"
+                                         FontSize="150"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"/>
+                        <Button x:Name="ButtonSave"
+                                ToolTip="显示大图"
+                                Grid.Row="0"
+                                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Margin="0 0 10 -20"
+                                Click="Button_Click">
+                            <materialDesign:PackIcon Kind="ArrowExpand" Width="25" Height="25"/>
+                        </Button>
+                        <Button x:Name="ButtonCopy"
+                                ToolTip="复制到剪贴板"
+                                Grid.Row="0"
+                                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Margin="10 0 0 -20"
+                                Click="Button_Click">
+                            <materialDesign:PackIcon Kind="ContentCopy" Width="25" Height="25"/>
+                        </Button>
+                        <StackPanel Grid.Row="1"
+                            Margin="8 30 8 0">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock" x:Key="Introduction">
+                                    <Setter Property="Margin" Value="5 0 0 0"/>
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                    <Setter Property="FontSize" Value="16"/>
+                                </Style>
+                                <Style TargetType="TextBlock" x:Key="Title">
+                                    <Setter Property="Margin" Value="0 5 0 0"/>
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                    <Setter Property="FontSize" Value="10"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Style="{StaticResource Title}" Text="Name"/>
+                            <TextBlock Style="{StaticResource Introduction}" Text="{Binding Name}"
+                                FontWeight="Bold"/>
+                            <TextBlock Style="{StaticResource Title}" Text="Note"/>
+                            <TextBlock Style="{StaticResource Introduction}" Text="{Binding Note}"/>
+                            <TextBlock Style="{StaticResource Title}" Text="Group"/>
+                            <TextBlock Style="{StaticResource Introduction}" Text="{Binding Group}"/>
+                            <TextBlock Style="{StaticResource Title}" Text="SubGroup"/>
+                            <TextBlock Style="{StaticResource Introduction}" Text="{Binding Subgroup}"/>
+                            <TextBlock Style="{StaticResource Title}" Text="Unicode"/>
+                            <TextBlock Style="{StaticResource Introduction}" Text="{Binding Unicode}"/>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+            <!--
+                <StackPanel Width="250"
+                            Orientation="Vertical">
+
+                    
+
+                </StackPanel>
+            -->
+            </Expander>
+        </StackPanel>
+
+    </Grid>
+</Page>

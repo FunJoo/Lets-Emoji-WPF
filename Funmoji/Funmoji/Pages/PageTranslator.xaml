@@ -1,0 +1,102 @@
+﻿<Page x:Class="Funmoji.Pages.PageTranslator"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Funmoji.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="PageTranslator"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"        
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{StaticResource FontYahei}"
+      
+      xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+      >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ToolBarTray x:Name="ToolBarTrayTop"
+                     Grid.ColumnSpan="3">
+            <ToolBar Style="{DynamicResource MaterialDesignToolBar}"
+                     ClipToBounds="False">
+                <CheckBox x:Name="CheckBoxWoYe">
+                    <emoji:TextBlock Text="我→👴" FontSize="15"/>
+                </CheckBox>
+                <CheckBox x:Name="CheckBoxDaDai">
+                    <emoji:TextBlock Text="大→带" FontSize="15"/>
+                </CheckBox>
+                <Separator />
+                <Label Content="学习新词：" VerticalAlignment="Center"
+                       Margin="0 0 -10 0"/>
+                <Button ToolTip="学习新词"
+                        x:Name="ButtonLearn"
+                        Click="Button_Click">
+                    <materialDesign:PackIcon
+                        Kind="BookOpenVariant" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <Border x:Name="BorderMiddle"
+                Grid.Column="1"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Background="{DynamicResource MaterialDesignDivider}"
+                Width="2"
+                VerticalAlignment="Stretch"
+                SnapsToDevicePixels="True" />
+
+        <TextBox x:Name="TextBoxDoc"
+                 materialDesign:HintAssist.Hint="原文写在这里"
+                 Grid.Row="1"
+                 Margin="5"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Visible"
+                 FontSize="15"/>
+
+        <ScrollViewer Grid.Row="1"
+                           Grid.Column="3"
+                      VerticalScrollBarVisibility="Visible">
+            <emoji:TextBlock x:Name="TextBlockShow"
+                           Margin="5"
+                         TextWrapping="Wrap"
+                         FontSize="50"/>
+        </ScrollViewer>
+
+        <Button x:Name="ButtonCopy"
+                Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                Width="120" 
+                Content="复制到剪贴板"
+                Grid.Row="3"
+                Grid.Column="3"
+                Margin="0 0 0 5"
+                Click="Button_Click"/>
+
+        <Button x:Name="ButtonTranslate"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Width="100" 
+                Content="开始转换"
+                Grid.Row="3"
+                Margin="0 0 0 5"
+                Click="Button_Click"/>
+
+    </Grid>
+</Page>

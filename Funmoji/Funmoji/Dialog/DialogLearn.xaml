@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Funmoji.Dialog.DialogLearn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Funmoji.Dialog"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="250" d:DesignWidth="250"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal" 
+             TextOptions.TextRenderingMode="Auto"        
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{StaticResource FontYahei}"
+             
+             xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+             >
+    <Grid Width="250"
+          Height="250">
+
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    Margin="20">
+            <TextBlock Text="学习词汇（只影响本地词库）"
+                       Margin="0,10,0,0"
+                       HorizontalAlignment="Center"/>
+            <TextBox Name="TextBoxYuan"
+                     Width="200"
+                     materialDesign:HintAssist.Hint="原词汇"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Margin="0,20,0,0"
+                     FontSize="14"/>
+            <TextBox Name="TextBoxNew"
+                     Width="200"
+                     materialDesign:HintAssist.Hint="新词汇"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Margin="0,20,0,0"
+                     FontSize="14"/>
+            <Grid Margin="0,30,0,0">
+                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Width="80"
+                        Content="确认"
+                        Margin="0,0,100,0"
+                        Click="Button_Click"
+                        Name="ButtonOK"/>
+                <Button Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Width="80"
+                        Content="取消"
+                        Margin="100,0,0,0"
+                        Name="ButtonCancel"
+                        Click="Button_Click"/>
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
